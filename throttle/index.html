@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>throttle</title>
+
+	<style>
+	body {
+		font-family: "consolas",\5FAE\8F6F\96C5\9ED1;
+	}
+	.box {
+		float: left;
+		width: 500px;
+		margin: 10px;
+		padding: 10px;
+		border: 1px solid #edf;
+		word-wrap: break-word;
+	}
+	</style>
+
+</head>
+<body>
+	<div class="box" id="normal">
+		<h2>normal</h2>
+		<div class="count"></div>
+		<div class="timer"></div>
+	</div>
+	<div class="box" id="throttle">
+		<h2>throttle</h2>
+		<div class="count"></div>
+		<div class="timer"></div>
+	</div>
+	<script>
+		function throttle(fn,delay){
+			var _timer,start,_self = fn;
+			return function(){
+				var args = argument;
+				var scope = this;
+				var now = +new Date();
+
+				if(!start) {
+					start = now;
+					_self.apply(scope,args);
+					return;
+				}
+
+				if(now - start > delay) {
+					_self.apply(scope.args);
+
+				}
+
+				start = now;
+
+			}
+		}
+
+		var i=0;
+		window.addEventListener('resize',function(){
+			var time = +new Date();
+			var oDiv = document.getElementById('normal');
+			oDiv.querySelector('.timer').innerHTML+=","+time;
+			oDiv.querySelector('.count').innerHTML = i
+			i++;
+		})
+	</script>
+</body>
+</html>
